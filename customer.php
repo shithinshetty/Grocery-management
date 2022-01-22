@@ -137,6 +137,7 @@
 		cat.find("[name='contact']").val($(this).attr('data-contact'))
 		cat.find("[name='address']").val($(this).attr('data-address'))
 		cat.find("[name='email']").val($(this).attr('data-address'))
+	    end_load()
 	})
 	$('.delete_customer').click(function(){
 		_conf("Are you sure to delete this customer?","delete_customer",[$(this).attr('data-id')])
