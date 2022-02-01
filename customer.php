@@ -25,10 +25,7 @@
 								<label class="control-label">Address</label>
 								<textarea class="form-control" cols="30" rows="3" name="address"></textarea>
 							</div>
-							<div class="form-group">
-								<label class="control-label">Email</label>
-								<textarea class="form-control" cols="30" rows="3" name="email"></textarea>
-							</div>
+							
 							
 					</div>
 							
@@ -71,7 +68,7 @@
 										<p>Name : <b><?php echo $row['name'] ?></b></p>
 										<p><small>Contact : <b><?php echo $row['contact'] ?></b></small></p>
 										<p><small>Address : <b><?php echo $row['address'] ?></b></small></p>
-										<p><small>Email : <b><?php echo $row['email'] ?></b></small></p>
+										
 									</td>
 									</td>
 									<td class="text-center">
@@ -138,7 +135,7 @@
 		cat.find("[name='name']").val($(this).attr('data-name'))
 		cat.find("[name='contact']").val($(this).attr('data-contact'))
 		cat.find("[name='address']").val($(this).attr('data-address'))
-		cat.find("[name='email']").val($(this).attr('data-address'))
+		
 	    end_load()
 	})
 	$('.delete_customer').click(function(){

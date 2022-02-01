@@ -20,7 +20,7 @@ FIRST Download
 
 6. Import sales_inventory_db.sql file(given inside the zip package in SQL file folder)
 
-7.Run the script http://localhost/Groceries_Sales_and_Inventory_System
+7.Run the script http://localhost/Wholesale_and_Inventory_System
 
 
 **LOGIN DETAILS** 
@@ -32,6 +32,3 @@ pass: jsmith123
 Admin
 user: admin
 pass: admin123
-
-****** https:1sourcecodr.blogspot.com ******
-Subcribe my You tube Channel **** 1 Source code ****
