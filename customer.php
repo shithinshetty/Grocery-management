@@ -51,6 +51,8 @@
 					<div class="card-body">
 						<table class="table table-bordered table-hover">
 							<thead>
+							<a href="tgs.php">Deleted Accounts</a>
+								
 								<tr>
 									<th class="text-center">Sl.No</th>
 									<th class="text-center">Customer</th>

@@ -19,7 +19,7 @@
 </head>
 <style>
 	body{
-        background: #80808045;
+        background: tan;
   }
 </style>
 
