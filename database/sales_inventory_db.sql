@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 01, 2022 at 03:40 PM
+-- Generation Time: Feb 01, 2022 at 04:23 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -25,9 +25,9 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getCustName` ()  BEGIN
-     SELECT*FROM  customer_list 
-     WHERE address ='Bangalore';
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getCustName` (IN `ads` VARCHAR(20))  BEGIN
+     SELECT*FROM  customer_list
+     WHERE address =ads;
 END$$
 
 DELIMITER ;
@@ -78,7 +78,8 @@ INSERT INTO `customer_list` (`id`, `name`, `contact`, `address`, `email`) VALUES
 (2, 'Sushma', '9625186612', 'Bangalore', 'sassysushma@gmail.com'),
 (3, 'Praful', '8912317882', 'Chennai', ''),
 (4, 'Sagar', '872384522', 'Bangalore', ''),
-(5, 'Varun', '9875114862', 'Bangalore', '');
+(5, 'Varun', '9875114862', 'Bangalore', ''),
+(7, 'Raju', '8451762258', 'Hyderabad', '');
 
 --
 -- Triggers `customer_list`
@@ -398,7 +399,7 @@ ALTER TABLE `category_list`
 -- AUTO_INCREMENT for table `customer_list`
 --
 ALTER TABLE `customer_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `inventory`
