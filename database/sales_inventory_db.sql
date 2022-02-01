@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 22, 2020 at 09:47 AM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.33
+-- Generation Time: Feb 01, 2022 at 03:40 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.3.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,17 @@ SET time_zone = "+00:00";
 --
 -- Database: `sales_inventory_db`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getCustName` ()  BEGIN
+     SELECT*FROM  customer_list 
+     WHERE address ='Bangalore';
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -41,7 +52,8 @@ INSERT INTO `category_list` (`id`, `name`) VALUES
 (2, 'Meat'),
 (3, 'Hygiene'),
 (4, 'Snacks'),
-(5, 'Drinks');
+(5, 'Drinks'),
+(7, 'Stationary');
 
 -- --------------------------------------------------------
 
@@ -61,9 +73,20 @@ CREATE TABLE `customer_list` (
 -- Dumping data for table `customer_list`
 --
 
-INSERT INTO `customer_list` (`id`, `name`, `contact`, `address`,`email`) VALUES
-(1, 'Rahul', '8747808787','mumbai','rahul@gmail.com'),
-(2, 'Sushma', '9625186611','bangalore','sassysushma@gmail.com');
+INSERT INTO `customer_list` (`id`, `name`, `contact`, `address`, `email`) VALUES
+(1, 'Rahul', '8747808787', 'mumbai', 'rahul@gmail.com'),
+(2, 'Sushma', '9625186612', 'Bangalore', 'sassysushma@gmail.com'),
+(3, 'Praful', '8912317882', 'Chennai', ''),
+(4, 'Sagar', '872384522', 'Bangalore', ''),
+(5, 'Varun', '9875114862', 'Bangalore', '');
+
+--
+-- Triggers `customer_list`
+--
+DELIMITER $$
+CREATE TRIGGER `deletelog` BEFORE DELETE ON `customer_list` FOR EACH ROW INSERT INTO logs VALUES(null,old.name,"Acc is deleted",NOW())
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -88,19 +111,58 @@ CREATE TABLE `inventory` (
 --
 
 INSERT INTO `inventory` (`id`, `product_id`, `qty`, `type`, `stock_from`, `form_id`, `other_details`, `remarks`, `date_updated`) VALUES
-(1, 1, 50, 1, 'receiving', 1, '{\"price\":\"70\",\"qty\":\"50\"}', 'Stock from Receiving-04377352\r\n', '2020-09-22 11:51:28'),
-(8, 4, 50, 1, 'receiving', 1, '{\"price\":\"20\",\"qty\":\"50\"}', 'Stock from Receiving-04377352\r\n', '2020-09-22 11:51:42'),
-(10, 5, 100, 1, 'receiving', 1, '{\"price\":\"20\",\"qty\":\"100\"}', 'Stock from Receiving-04377352\r\n', '2020-09-22 11:53:11'),
-(11, 3, 100, 1, 'receiving', 1, '{\"price\":\"30\",\"qty\":\"100\"}', 'Stock from Receiving-04377352\r\n', '2020-09-22 11:53:11'),
-(13, 4, 10, 2, 'Sales', 1, '{\"price\":\"10\",\"qty\":\"10\"}', 'Stock out from Sales-00000000\r\n', '2020-09-22 15:23:02'),
-(14, 4, 20, 2, 'Sales', 2, '{\"price\":\"10\",\"qty\":\"20\"}', 'Stock out from Sales-17671173\n', '2020-09-22 15:00:46'),
-(15, 4, 10, 2, 'Sales', 3, '{\"price\":\"10\",\"qty\":\"10\"}', 'Stock out from Sales-16042993\n', '2020-09-22 15:01:55'),
-(16, 1, 10, 2, 'Sales', 4, '{\"price\":\"75\",\"qty\":\"10\"}', 'Stock out from Sales-50470080\r\n', '2020-09-22 15:42:59'),
 (18, 1, 2, 2, 'Sales', 0, '{\"price\":\"75\",\"qty\":\"2\"}', 'Stock out from Sales-00000000\r\n', '2020-09-22 15:19:22'),
 (19, 1, 2, 2, 'Sales', 0, '{\"price\":\"75\",\"qty\":\"2\"}', 'Stock out from Sales-00000000\r\n', '2020-09-22 15:20:03'),
-(20, 1, 2, 2, 'Sales', 1, '{\"price\":\"75\",\"qty\":\"2\"}', 'Stock out from Sales-00000000\r\n', '2020-09-22 15:23:02'),
-(21, 3, 10, 2, 'Sales', 4, '{\"price\":\"30\",\"qty\":\"10\"}', 'Stock out from Sales-50470080\r\n', '2020-09-22 15:42:59'),
-(22, 5, 5, 2, 'Sales', 4, '{\"price\":\"25\",\"qty\":\"5\"}', 'Stock out from Sales-50470080\r\n', '2020-09-22 15:42:59');
+(24, 8, 20, 1, 'receiving', 3, '{\"price\":\"500\",\"qty\":\"20\"}', 'Stock from Receiving-00000000\n', '2022-02-01 16:48:20'),
+(25, 5, 30, 1, 'receiving', 3, '{\"price\":\"1000\",\"qty\":\"30\"}', 'Stock from Receiving-00000000\n', '2022-02-01 16:48:20'),
+(26, 6, 10, 1, 'receiving', 4, '{\"price\":\"1300\",\"qty\":\"10\"}', 'Stock from Receiving-31072260\n', '2022-02-01 16:48:56'),
+(27, 7, 30, 1, 'receiving', 4, '{\"price\":\"300\",\"qty\":\"30\"}', 'Stock from Receiving-31072260\n', '2022-02-01 16:48:56'),
+(28, 1, 20, 1, 'receiving', 5, '{\"price\":\"1500\",\"qty\":\"20\"}', 'Stock from Receiving-31374215\n', '2022-02-01 16:50:27'),
+(29, 3, 15, 1, 'receiving', 5, '{\"price\":\"300\",\"qty\":\"15\"}', 'Stock from Receiving-31374215\n', '2022-02-01 16:50:27'),
+(30, 6, 2, 1, 'receiving', 5, '{\"price\":\"200\",\"qty\":\"2\"}', 'Stock from Receiving-31374215\n', '2022-02-01 16:50:28'),
+(31, 4, 30, 1, 'receiving', 6, '{\"price\":\"200\",\"qty\":\"30\"}', 'Stock from Receiving-15239079\n', '2022-02-01 16:54:15'),
+(32, 8, 10, 1, 'receiving', 6, '{\"price\":\"180\",\"qty\":\"10\"}', 'Stock from Receiving-15239079\n', '2022-02-01 16:54:15'),
+(33, 8, 10, 2, 'Sales', 7, '{\"price\":\"30\",\"qty\":\"10\"}', 'Stock out from Sales-00000000\n', '2022-02-01 16:55:27'),
+(34, 5, 3, 2, 'Sales', 8, '{\"price\":\"25\",\"qty\":\"3\"}', 'Stock out from Sales-20643610\n', '2022-02-01 16:55:53'),
+(35, 3, 5, 2, 'Sales', 9, '{\"price\":\"30\",\"qty\":\"5\"}', 'Stock out from Sales-69497504\n', '2022-02-01 16:56:37'),
+(36, 7, 2, 2, 'Sales', 9, '{\"price\":\"30\",\"qty\":\"2\"}', 'Stock out from Sales-69497504\n', '2022-02-01 16:56:37'),
+(37, 4, 10, 2, 'Sales', 10, '{\"price\":\"10\",\"qty\":\"10\"}', 'Stock out from Sales-10595403\n', '2022-02-01 16:57:11'),
+(38, 9, 10, 1, 'receiving', 7, '{\"price\":\"80\",\"qty\":\"10\"}', 'Stock from Receiving-19822061\n', '2022-02-01 17:08:21'),
+(39, 9, 2, 2, 'Sales', 11, '{\"price\":\"10\",\"qty\":\"2\"}', 'Stock out from Sales-77280274\n', '2022-02-01 17:09:18'),
+(40, 4, 3, 2, 'Sales', 11, '{\"price\":\"10\",\"qty\":\"3\"}', 'Stock out from Sales-77280274\n', '2022-02-01 17:09:18'),
+(41, 8, 2, 2, 'Sales', 11, '{\"price\":\"30\",\"qty\":\"2\"}', 'Stock out from Sales-77280274\n', '2022-02-01 17:09:18'),
+(42, 8, 10, 2, 'Sales', 12, '{\"price\":\"30\",\"qty\":\"10\"}', 'Stock out from Sales-77063471\n', '2022-02-01 17:12:30'),
+(43, 7, 20, 2, 'Sales', 12, '{\"price\":\"30\",\"qty\":\"20\"}', 'Stock out from Sales-77063471\n', '2022-02-01 17:12:30'),
+(44, 6, 3, 2, 'Sales', 13, '{\"price\":\"130\",\"qty\":\"3\"}', 'Stock out from Sales-03739501\n', '2022-02-01 17:14:22'),
+(45, 4, 5, 2, 'Sales', 14, '{\"price\":\"10\",\"qty\":\"5\"}', 'Stock out from Sales-26282422\n', '2022-02-01 17:18:57'),
+(46, 7, 3, 2, 'Sales', 14, '{\"price\":\"30\",\"qty\":\"3\"}', 'Stock out from Sales-26282422\n', '2022-02-01 17:18:57'),
+(47, 8, 3, 2, 'Sales', 14, '{\"price\":\"30\",\"qty\":\"3\"}', 'Stock out from Sales-26282422\n', '2022-02-01 17:18:57'),
+(48, 6, 7, 2, 'Sales', 14, '{\"price\":\"130\",\"qty\":\"7\"}', 'Stock out from Sales-26282422\n', '2022-02-01 17:18:57'),
+(49, 1, 5, 2, 'Sales', 15, '{\"price\":\"100\",\"qty\":\"5\"}', 'Stock out from Sales-45300764\n', '2022-02-01 17:19:23'),
+(50, 9, 8, 2, 'Sales', 16, '{\"price\":\"10\",\"qty\":\"8\"}', 'Stock out from Sales-03853136\n', '2022-02-01 17:19:45'),
+(51, 5, 5, 2, 'Sales', 17, '{\"price\":\"25\",\"qty\":\"5\"}', 'Stock out from Sales-06433347\n', '2022-02-01 17:20:12'),
+(52, 1, 3, 2, 'Sales', 17, '{\"price\":\"100\",\"qty\":\"3\"}', 'Stock out from Sales-06433347\n', '2022-02-01 17:20:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `logs`
+--
+
+CREATE TABLE `logs` (
+  `id` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `action` varchar(20) NOT NULL,
+  `ddate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `logs`
+--
+
+INSERT INTO `logs` (`id`, `name`, `action`, `ddate`) VALUES
+(1, 'Sushma', 'Acc is deleted', '2022-02-01 16:59:52'),
+(3, 'Vishnu', 'Acc is deleted', '2022-02-01 19:42:02');
 
 -- --------------------------------------------------------
 
@@ -125,7 +187,11 @@ INSERT INTO `product_list` (`id`, `category_id`, `sku`, `price`, `name`, `descri
 (1, 1, '56254', 100, 'Apple', 'shimla red apple'),
 (3, 5, '91643', 30, 'Mountain dew', 'mountain dew drink 350ml'),
 (4, 4, '11765', 10, 'Doritos', 'Big Chips'),
-(5, 3, '74628', 25, 'Diapers', 'huggies');
+(5, 3, '74628', 25, 'Diapers', 'huggies'),
+(6, 5, '93045251', 130, 'Roohafsa', 'Roohafsa 100 ml'),
+(7, 1, '89688728', 30, 'Potatoes', '100gms'),
+(8, 2, '05979522', 30, 'Eggs', 'A PACK OF SIX'),
+(9, 7, '18203131', 10, 'Reynolds Pen', 'Blue Ball pen');
 
 -- --------------------------------------------------------
 
@@ -146,7 +212,11 @@ CREATE TABLE `receiving_list` (
 --
 
 INSERT INTO `receiving_list` (`id`, `ref_no`, `supplier_id`, `total_amount`, `date_added`) VALUES
-(1, '04377352\n', 3, 9500, '2020-09-22 11:16:00');
+(3, '00000000\n', 4, 40000, '2022-02-01 16:48:20'),
+(4, '31072260\n', 5, 22000, '2022-02-01 16:48:56'),
+(5, '31374215\n', 3, 34900, '2022-02-01 16:50:27'),
+(6, '15239079\n', 4, 7800, '2022-02-01 16:54:15'),
+(7, '19822061\n', 4, 800, '2022-02-01 17:08:21');
 
 -- --------------------------------------------------------
 
@@ -169,10 +239,17 @@ CREATE TABLE `sales_list` (
 --
 
 INSERT INTO `sales_list` (`id`, `ref_no`, `customer_id`, `total_amount`, `amount_tendered`, `amount_change`, `date_updated`) VALUES
-(1, '18552\r\n', 0, 250, 300, 50, '2020-09-22 15:19:22'),
-(2, '17693\n', 2, 200, 200, 0, '2020-09-22 15:00:46'),
-(3, '16087\n', 2, 100, 1000, 900, '2020-09-22 15:01:55'),
-(4, '56676\n', 0, 1175, 1200, 25, '2020-09-22 15:42:59');
+(7, '00000000\n', 3, 300, 500, 200, '2022-02-01 16:55:27'),
+(8, '20643610\n', 0, 75, 100, 25, '2022-02-01 16:55:53'),
+(9, '69497504\n', 2, 210, 210, 0, '2022-02-01 16:56:37'),
+(10, '10595403\n', 2, 100, 100, 0, '2022-02-01 16:57:11'),
+(11, '77280274\n', 5, 110, 200, 90, '2022-02-01 17:09:18'),
+(12, '77063471\n', 0, 900, 1000, 100, '2022-02-01 17:12:30'),
+(13, '03739501\n', 2, 390, 400, 10, '2022-02-01 17:14:22'),
+(14, '26282422\n', 4, 1140, 1500, 360, '2022-02-01 17:18:56'),
+(15, '45300764\n', 0, 500, 500, 0, '2022-02-01 17:19:23'),
+(16, '03853136\n', 0, 80, 100, 20, '2022-02-01 17:19:45'),
+(17, '06433347\n', 0, 425, 500, 75, '2022-02-01 17:20:12');
 
 -- --------------------------------------------------------
 
@@ -192,8 +269,10 @@ CREATE TABLE `supplier_list` (
 --
 
 INSERT INTO `supplier_list` (`id`, `supplier_name`, `contact`, `address`) VALUES
-(1, 'Rakesh Verma', '9765524556', 'Kolkata'),
-(3, 'Manish Malhotra', '9365465315', 'Mumbai');
+(1, 'Rakesh Verma', '9765524556', 'Kolkat\r\n'),
+(3, 'Manish Malhotra', '9365465315', 'Mumbai'),
+(4, 'Rahul jain', '9866182881', 'Hyderabad'),
+(5, 'Suresh  Sharma', '9831672661', 'Bangalore');
 
 -- --------------------------------------------------------
 
@@ -236,9 +315,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`,`gender`, `username`, `password`, `type`) VALUES
-(1, 'Administrator','1', 'admin', 'admin123', 1),
-(3, 'Apeksha','2', 'apeksha', 'appu123', 2);
+INSERT INTO `users` (`id`, `name`, `gender`, `username`, `password`, `type`) VALUES
+(1, 'Shithin', 1, 'Shithin', 'admin', 1),
+(3, 'Ullas', 1, 'Ullas', 'cashier', 2),
+(4, 'Hima', 2, 'Hima', 'cashier', 2);
+
 --
 -- Indexes for dumped tables
 --
@@ -259,6 +340,12 @@ ALTER TABLE `customer_list`
 -- Indexes for table `inventory`
 --
 ALTER TABLE `inventory`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `logs`
+--
+ALTER TABLE `logs`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -305,43 +392,49 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `category_list`
 --
 ALTER TABLE `category_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `customer_list`
 --
 ALTER TABLE `customer_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+
+--
+-- AUTO_INCREMENT for table `logs`
+--
+ALTER TABLE `logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `product_list`
 --
 ALTER TABLE `product_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `receiving_list`
 --
 ALTER TABLE `receiving_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `sales_list`
 --
 ALTER TABLE `sales_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `supplier_list`
 --
 ALTER TABLE `supplier_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `system_settings`
@@ -353,7 +446,7 @@ ALTER TABLE `system_settings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
