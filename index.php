@@ -5,7 +5,11 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+<<<<<<< HEAD
+  <title>Groceries Managament System</title>
+=======
   <title>Grocery Managament System</title>
+>>>>>>> 415b649bff8e0ca9335724369d0ed72f3ee3e14b
  	
 
 <?php
