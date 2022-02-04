@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Admin | WholeSale Management System</title>
+  <title>Admin | Groceries Management System</title>
  	
 
 <?php include('./header.php'); ?>
