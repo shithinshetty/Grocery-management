@@ -5,7 +5,7 @@
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header">
-						<h4><b>WholeSale Inventory</b></h4>
+						<h4><b>Grocery Inventory</b></h4>
 					</div>
 					<div class="card-body">
 						<table class="table table-bordered">
